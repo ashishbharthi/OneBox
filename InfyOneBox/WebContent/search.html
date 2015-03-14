@@ -6,62 +6,64 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/animate.min.css">
-
+<link rel="stylesheet" href="css/bootstrap-datepicker.standalone.css">
 
 <meta charset="utf-8">
 <title>Infy One Box</title>
 </head>
 <body>
-  <div style="position:fixed;
-   right:60px;
-   top:5px; float:right; display:none">
-    <img src="https://www.pehub.com/wp-content/uploads/avatars/11839/9213ed45c2d7ad5d6e7f5742e35ec892-bpthumb.jpg" class="img-circle">
-  </div>
-  <div style="position:fixed;
-   right:10px;
-   top:5px; float:right display:none">
-<!--  <form align="right" name="form1" method="post" action="">-->
-  <label class="logoutLblPos">
-    <button class="btn btn-default btn-lg" style="border:0px" id="submit2" ><i class="fa fa-cog"></i></button>
-  </label>
-<!--  </form>-->
-</div>
-<div id="searchDiv" class="container verticalCenter">
-  
-    <img class="center-block" src="images/400px-Infosys_logo.svg.png" width="200" >
-  
-  <br>
-  <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <form id="OneInfyBoxForm" onsubmit="doSearch(); return false;">
-    	<voice-recognition continuous="false" id="recognition-element"></voice-recognition>
-        <div class="input-group add-on">
-        	<input id="voiceMode" type="hidden"></input>
-          <input id="searchText" type="text" autocomplete="off" style="border-right:0px" class="form-control input-lg"></input>
-          <div class="input-group-btn">
-            <button id="crossButton" class="btn btn-default btn-lg" style="margin-right:-10px;border-left:0px;display:none"><i class="fa fa-times"></i></button>
-            <button id="speechButton" class="btn btn-default btn-lg" style="border-left:0px" ><i id="speechButtonIcon"  class="fa fa-microphone"></i></button>
-            <button id="searchButton" class="btn btn-success btn-lg"><i class="fa fa-search"></i></button>
-          </div>
-          
-        </div>
-      
-      </form>
-      <ul id="resultList" class="list-group"></ul>
-  </div>
-  <voice-player id="oneInfyTalker" text=""></voice-player>
-  </div>
-</div>
+	<div id="searchDiv" class="container verticalCenter">
 
- 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/polymer.min.js"></script>
-<link rel="import" href="js/voice-player.html">
-<link rel="import" href="js/voice-recognition.html">
-<script src="js/app.js"></script>
+		<img class="center-block" src="images/400px-Infosys_logo.svg.png"
+			width="200"> <br>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<form id="OneInfyBoxForm" onsubmit="doSearch(); return false;">
+					<voice-recognition continuous="false" id="recognition-element"></voice-recognition>
+					<div class="input-group add-on">
+						<input id="voiceMode" type="hidden"></input> <input
+							id="searchText" type="text" autocomplete="off"
+							style="border-right: 0px" class="form-control input-lg"></input>
+						<div class="input-group-btn">
+							<button id="crossButton" class="btn btn-default btn-lg"
+								style="margin-right: -10px; border-left: 0px; display: none">
+								<i class="fa fa-times"></i>
+							</button>
+							<button id="speechButton" class="btn btn-default btn-lg"
+								style="border-left: 0px">
+								<i id="speechButtonIcon" class="fa fa-microphone"></i>
+							</button>
+							<button id="searchButton" class="btn btn-success btn-lg">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+
+					</div>
+
+				</form>
+				<ul id="resultList" class="list-group"></ul>
+				<div class="hackyhack">
+					<div id="datepicker"></div>
+					<input type="hidden" id="my_hidden_input" />
+				</div>
+
+			</div>
+			<voice-player id="oneInfyTalker" text=""></voice-player>
+		</div>
+	</div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/polymer.min.js"></script>
+	<link rel="import" href="js/voice-player.html">
+	<link rel="import" href="js/voice-recognition.html">
+	<script src="js/app.js"></script>
+	<script src="js/bootstrap-datepicker.min.js"></script>
+
 </body>
 </html>

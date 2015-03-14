@@ -29,22 +29,6 @@ element.addEventListener('result', function(e) {
 	$("#searchButton").click();
 });
 
-talker.addEventListener('end', function(e) {
-	console.log("Taking Action...", infyOneResp);
-	if(!infyOneResp){
-		
-	} else if(infyOneResp.results.length === 1) {
-		runFunction(infyOneResp.results[0].type, [infyOneResp.results[0]]);
-	} else {
-		var html ="";
-		var results = infyOneResp.results;
-		for(var i=0; i<results.length; i++){
-			html = html + "<li class=\"list-group-item\"><a href='" + results[i].url + "'>" + results[i].url + "</a></li>";
-		}
-		$('#resultList').append(html);
-	}
-});
-
 $(function(){
 	$('#searchText').focus();
 	
@@ -56,9 +40,7 @@ $(function(){
 		showHideCrossButton();
 	});
 	
-	$('#crossButton').click(function(e){
-		$('#searchText').val = '';
-	});
+	
 	
 	function showHideCrossButton(){
 		if($('#searchText').val().length > 0){
@@ -69,8 +51,17 @@ $(function(){
 	}
 });
 
+//$('#crossButton').click(function(event){
+//	event.preventDefault();
+//	event.stopPropagation();
+//	$('#searchText')[0].val = '';
+//	$('#resultList')[0].empty();
+//});
+
 var infyOneResp;
 var doSearch = function(event) {
+	//event.preventDefault();
+	//event.stopPropagation();
 	$('#searchDiv').removeClass('verticalCenter');
 	$('#resultList').empty();
 	var srchTxt = $('#searchText').val();
@@ -107,7 +98,21 @@ var processResponse = function(){
 	setTimeout(function(){talker.speak();}, 500);
 };
 
-
+talker.addEventListener('end', function(e) {
+	console.log("Taking Action...", infyOneResp);
+	if(!infyOneResp){
+		
+	} else if(infyOneResp.results.length === 1) {
+		runFunction(infyOneResp.results[0].type, [infyOneResp.results[0]]);
+	} else {
+		var html ="";
+		var results = infyOneResp.results;
+		for(var i=0; i<results.length; i++){
+			html = html + "<li class=\"list-group-item\"><a href='" + results[i].url + "'>" + results[i].url + "</a></li>";
+		}
+		$('#resultList').append(html);
+	}
+});
 
 function runFunction(name, arguments)
 {
@@ -124,5 +129,27 @@ function runFunction(name, arguments)
 function show(msg)
 {
 	window.open(msg.url,'_target');
+}
+
+/* Asks user for a date for apply leave workflow */
+function apply(msg){
+	if(msg.status === "incomplete"){
+		if(msg.nextUserInputType === "date") {
+			if(msg.nextUserInputName === "To Date"){}
+			$('#datepicker').datepicker({
+				autoclose: true }).show();
+			$("#datepicker").on("changeDate", function(event) {
+			    $("#my_hidden_input").val(
+			        $("#datepicker").datepicker('getFormattedDate')
+			     );
+			    $("#datepicker").hide();
+			    input.value = input.value + " to " + $("#datepicker").datepicker('getFormattedDate');
+			    $("#searchButton").click();
+			});
+		}
+	} else if (msg.status === "complete") {
+		
+	}
+	
 }
 

@@ -104,7 +104,7 @@ public class LuceneSearchService {
 					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "incomplete", ""));
 					ro = new ResultsObject(result, "Please select to date", false);
 					
-				}else if(s.indexOf("Apply Leave from tomorrow to") > 0){
+				}else if(s.toLowerCase().indexOf("apply leave from tomorrow to") >= 0){
 					
 					Calendar c = Calendar.getInstance();
 					c.setTime(new Date()); // Now use today date.

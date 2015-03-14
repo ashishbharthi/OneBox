@@ -4,3 +4,14 @@
 .container {
 	margin-top: 2em;
 }
+
+#crossButton {
+	display: none !important;
+}
+.hackyhack {
+  position: relative;
+}
+.hackyhack .datepicker-inline {
+   left: auto !important;
+   right: 0px;
+ }
