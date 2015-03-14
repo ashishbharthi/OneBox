@@ -5,6 +5,7 @@
 var button = document.querySelector('#speechButton'),
     input = document.querySelector('#searchText'),
     element = document.querySelector('#recognition-element'),
+    talker = document.querySelector('#oneInfyTalker'),
 	icon = document.getElementById('speechButtonIcon');
 	
 button.addEventListener('click', function(e) {
@@ -26,6 +27,22 @@ element.addEventListener('result', function(e) {
 	icon.setAttribute("class", "fa fa-microphone");
 	
 	$("#searchButton").click();
+});
+
+talker.addEventListener('end', function(e) {
+	console.log("Taking Action...", infyOneResp);
+	if(!infyOneResp){
+		
+	} else if(infyOneResp.results.length === 1) {
+		runFunction(infyOneResp.results[0].type, [infyOneResp.results[0]]);
+	} else {
+		var html ="";
+		var results = infyOneResp.results;
+		for(var i=0; i<results.length; i++){
+			html = html + "<li class=\"list-group-item\"><a href='" + results[i].url + "'>" + results[i].url + "</a></li>";
+		}
+		$('#resultList').append(html);
+	}
 });
 
 $(function(){
@@ -51,6 +68,8 @@ $(function(){
 		}
 	}
 });
+
+var infyOneResp;
 var doSearch = function(event) {
 	$('#searchDiv').removeClass('verticalCenter');
 	var srchTxt = $('#searchText').val();
@@ -66,32 +85,28 @@ var doSearch = function(event) {
 		})
 	.done(function( msg ) {
 		console.log("Done Handler");
-		processData(msg);
+		infyOneResp = msg;
+		processResponse();
 	}).fail(function(err){
 		console.log("Error: ",err);
-	});//.always(processData(1));//Delete this always
+	});//.always(processResponse(1));//Delete this always
 	
 	return false;
 };
 
-var processData = function(jsonData){
-	//Remove this hardcoding of jsonData
-	/*jsonData = {
-			type: 'show',
-			url: 'http://google.com'
-	};*/
 
-	if(jsonData.length === 1) {
-		runFunction(jsonData[0].type, [jsonData[0]]);
-	} else {
-		var html ="";
-		for(var i=0; i<jsonData.length; i++){
-			html = html + "<li class=\"list-group-item\"><a href='" + jsonData[i].url + "'>" + jsonData[i].url + "</a></li>";
-		}
-		$('#resultList').append(html);
-	}
+var processResponse = function(){
 	
+	if(infyOneResp.say === undefined) {
+		console.log(infyOneResp);
+		infyOneResp.say = "Nothing to say yet.";
+	}
+
+	talker.setAttribute('text', infyOneResp.say);
+	setTimeout(function(){talker.speak();}, 500);
 };
+
+
 
 function runFunction(name, arguments)
 {
