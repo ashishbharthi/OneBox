@@ -20,8 +20,12 @@ element.addEventListener('result', function(e) {
 	
     input.value = e.detail.result;
     element.stop();
+    var elem = document.getElementById("voiceMode");
+    elem.value = "true";
     icon.style.color = "black";
 	icon.setAttribute("class", "fa fa-microphone");
+	
+	$("#searchButton").click();
 });
 
 $(function(){
@@ -50,12 +54,15 @@ $(function(){
 var doSearch = function(event) {
 	$('#searchDiv').removeClass('verticalCenter');
 	var srchTxt = $('#searchText').val();
-	console.log(srchTxt);
+	var voiceMode = $('#voiceMode').val();
 	
 	$.ajax({
 		  method: "POST",
 		  url: "oneinfysearch",
-		  data: { srchTxt: srchTxt}
+		  data: { 
+			  srchTxt: srchTxt,
+			  voice: voiceMode		
+			  }
 		})
 	.done(function( msg ) {
 		console.log("Done Handler");
