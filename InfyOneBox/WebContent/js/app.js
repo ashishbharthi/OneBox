@@ -150,7 +150,7 @@ function apply(msg){
 			        $("#datepicker").datepicker('getFormattedDate')
 			     );
 			    $("#datepicker").hide();
-			    ("#oneInfyTalkerText").empty();
+			    $("#oneInfyTalkerText").empty();
 			    input.value = input.value + operator + $("#datepicker").datepicker('getFormattedDate');
 			    $("#searchButton").click();
 			});
