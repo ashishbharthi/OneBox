@@ -54,7 +54,7 @@ var doSearch = function(event) {
 	
 	$.ajax({
 		  method: "POST",
-		  url: "/oneinfysearch",
+		  url: "oneinfysearch",
 		  data: { srchTxt: srchTxt}
 		})
 	.done(function( msg ) {
