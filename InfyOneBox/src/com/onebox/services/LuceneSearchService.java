@@ -36,13 +36,13 @@ public class LuceneSearchService {
 
 		IndexWriter w = new IndexWriter(index, config);
 		addDoc(w, "harmony", "HarmonyURL");
-		addDoc(w, "view passport Details", "Passport URL");
-		addDoc(w, "show me my passport", "Passport URL");
-		addDoc(w, "Global Leave", "Leave System URL");
-		addDoc(w, "GLS", "Leave System URL");
-		addDoc(w, "Global Immigration", "GI system Url");
+		addDoc(w, "view passport Details", "PassportURL");
+		addDoc(w, "show me my passport", "PassportURL");
+		addDoc(w, "Global Leave", "LeaveSystemURL");
+		addDoc(w, "GLS", "Leave SystemURL");
+		addDoc(w, "Global Immigration", "GISystemUrl");
 		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
-		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
+		addDoc(w, "Lunch Menu Cafeteria", "CafeteriaMenu");
 
 		w.close();
 	}
