@@ -23,7 +23,7 @@
     <description></description>
     <display-name>DummyURLServlet</display-name>
     <servlet-name>DummyURLServlet</servlet-name>
-    <servlet-class>com.onebox.servlets.DummyURLServlet</servlet-class>
+    <jsp-file>/sparsh.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>DummyURLServlet</servlet-name>
