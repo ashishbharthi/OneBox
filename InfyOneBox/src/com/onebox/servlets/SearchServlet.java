@@ -48,24 +48,14 @@ public class SearchServlet extends HttpServlet {
 		LuceneSearchService lss = LuceneSearchService.getInstance();
 		
 		System.out.println("isVoice:" + request.getParameter("voice"));
+		List<OneInfyObject> results = null;
 		try {
-			List<OneInfyObject> results = lss.getSearchResults(searchText);
 			
-			String msg = "Showing results for " + searchText;
-			if (results.size() == 1) {
-				ShowObject so = (ShowObject)results.get(0);
-				msg = "Opening "+ so.getName() +" application";
-			}
-			
-			ResultsObject ro = new ResultsObject(results, msg, false);
+			ResultsObject ro = lss.getSearchResults(searchText);
 			
 			Gson g = new Gson();
-			
-			
 			response.setContentType("application/json");
-			
 			Writer w = response.getWriter();
-			
 			w.write(g.toJson(ro));
 			
 			response.getWriter().flush();
@@ -74,39 +64,5 @@ public class SearchServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	private boolean isShow(String str){
-		String[] arr = {"show", "view", "open"};
-		
-		for (int i = 0; i < arr.length; i++) {
-			if(str.toLowerCase().indexOf(arr[i]) > 0){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	private boolean isApply(String str){
-		String[] arr = {"apply"};
-		
-		for (int i = 0; i < arr.length; i++) {
-			if(str.toLowerCase().indexOf(arr[i]) > 0){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	private boolean isApprove(String str){
-		String[] arr = {"approve"};
-		
-		for (int i = 0; i < arr.length; i++) {
-			if(str.toLowerCase().indexOf(arr[i]) > 0){
-				return true;
-			}
-		}
-		
-		return false;
 	}
 }

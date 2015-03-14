@@ -20,7 +20,9 @@ import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
 import com.onebox.entity.OneInfyObject;
+import com.onebox.entity.ResultsObject;
 import com.onebox.entity.ShowObject;
+import com.onebox.entity.WorkflowObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class LuceneSearchService {
 	
 	
 	
-	public static List<OneInfyObject> getSearchResults(String s) throws ParseException, IOException{
+	public static ResultsObject getSearchResults(String s) throws ParseException, IOException{
 		
 		List<OneInfyObject> result = new ArrayList<OneInfyObject>();
 		Query q = new QueryParser("title", analyzer).parse(s);
@@ -84,17 +86,51 @@ public class LuceneSearchService {
 
 		// 4. display results
 		System.out.println("Found " + hits.length + " hits.");
-		for (int i = 0; i < hits.length; ++i) {
-			int docId = hits[i].doc;
-			Document d = searcher.doc(docId);
-			if(hits[i].score > 0.5f)
-				result.add(new ShowObject("show", d.get("isbn")));
+		
+		ResultsObject ro = null;
+		
+		if(isShow(s)){
+			for (int i = 0; i < hits.length; ++i) {
+				int docId = hits[i].doc;
+				Document d = searcher.doc(docId);
+				if(hits[i].score > 0.5f)
+					result.add(new ShowObject("show", d.get("isbn")));
+			}
+			
+			String msg = "Showing results for " + s;
+			if (result.size() == 1) {
+				ShowObject so = (ShowObject)result.get(0);
+				msg = "Opening "+ so.getName() +" application";
+			}
+			
+			ro = new ResultsObject(result, msg, false);
+		}else if(isApply(s)){
+			if(hits.length > 1){
+				if(s.equalsIgnoreCase("Apply Leave")){
+					
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "From Date", "date", "incomplete", ""));
+					ro = new ResultsObject(result, "Please select from date", false);
+					
+				}else if(s.equalsIgnoreCase("Apply Leave from tomorrow")){
+					
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "incomplete", ""));
+					ro = new ResultsObject(result, "Please select to date", false);
+					
+				}else if(s.indexOf("Apply Leave from tomorrow to") > 0){
+					
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "complete", "Leave Applied"));
+					ro = new ResultsObject(result, "Leave successfully applied. Thank you for using our application.", false);
+				}
+			}
 		}
+		
+		
+		
 
 		// reader can only be closed when there
 		// is no need to access the documents any more.
 		reader.close();
-		return result;
+		return ro;
 	}
 	
 	private static void addDoc(IndexWriter w, String title, String isbn)
@@ -106,62 +142,94 @@ public class LuceneSearchService {
 		doc.add(new StringField("isbn", isbn, Field.Store.YES));
 		w.addDocument(doc);
 	}
-	
-	public static void main(String[] args) throws IOException, ParseException {
-		// 0. Specify the analyzer for tokenizing text.
-		// The same analyzer should be used for indexing and searching
-		StandardAnalyzer analyzer = new StandardAnalyzer();
-
-		// 1. create the index
-		Directory index = new RAMDirectory();
-
-		IndexWriterConfig config = new IndexWriterConfig(analyzer);
-
-		IndexWriter w = new IndexWriter(index, config);
-		addDoc(w, "harmony", "Harmony");
-		addDoc(w, "view passport Details", "Passport");
-		addDoc(w, "show me my passport", "Passport");
-		addDoc(w, "Global Leave", "Leave System");
-		addDoc(w, "GLS", "Leave System");
-		addDoc(w, "Global Immigration", "Global Immigration System");
-		addDoc(w, "Apply Leave from tomorrow", "ApplyLeaveWorkflow");
-		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
-		addDoc(w, "Apply Leave from tomorrow for 1 day", "ApplyLeaveWorkflow");
+	private static boolean isShow(String str){
+		String[] arr = {"show", "view", "open"};
 		
-		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
-
-		w.close();
-
-		// 2. query
-		String querystr = args.length > 0 ? args[0] : "Cafeteria";
-
-		// the "title" arg specifies the default field to use
-		// when no field is explicitly specified in the query.
-		Query q = new QueryParser("title", analyzer).parse(querystr);
-
-		// 3. search
-		int hitsPerPage = 10;
-		IndexReader reader = DirectoryReader.open(index);
-		IndexSearcher searcher = new IndexSearcher(reader);
-
-		ScoreDoc sd = new ScoreDoc(0, 100);
-		TopScoreDocCollector collector = TopScoreDocCollector.create(
-				hitsPerPage, sd);
-		searcher.search(q, collector);
-		ScoreDoc[] hits = collector.topDocs().scoreDocs;
-
-		// 4. display results
-		System.out.println("Found " + hits.length + " hits.");
-		for (int i = 0; i < hits.length; ++i) {
-			int docId = hits[i].doc;
-			
-			Document d = searcher.doc(docId);
-			System.out.println((i + 1) + ". " + d.get("isbn") + "\t"
-					+ d.get("title") + " -->" + hits[i].score);
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
 		}
-
-		// reader can only be closed when there
-		// is no need to access the documents any more.
-		reader.close();
+		
+		return false;
 	}
+	private static boolean isApply(String str){
+		String[] arr = {"apply"};
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	private boolean isApprove(String str){
+		String[] arr = {"approve"};
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+//	public static void main(String[] args) throws IOException, ParseException {
+//		// 0. Specify the analyzer for tokenizing text.
+//		// The same analyzer should be used for indexing and searching
+//		StandardAnalyzer analyzer = new StandardAnalyzer();
+//
+//		// 1. create the index
+//		Directory index = new RAMDirectory();
+//
+//		IndexWriterConfig config = new IndexWriterConfig(analyzer);
+//
+//		IndexWriter w = new IndexWriter(index, config);
+//		addDoc(w, "harmony", "Harmony");
+//		addDoc(w, "view passport Details", "Passport");
+//		addDoc(w, "show me my passport", "Passport");
+//		addDoc(w, "Global Leave", "Leave System");
+//		addDoc(w, "GLS", "Leave System");
+//		addDoc(w, "Global Immigration", "Global Immigration System");
+//		addDoc(w, "Apply Leave from tomorrow", "ApplyLeaveWorkflow");
+//		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
+//		addDoc(w, "Apply Leave from tomorrow for 1 day", "ApplyLeaveWorkflow");
+//		
+//		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
+//
+//		w.close();
+//
+//		// 2. query
+//		String querystr = args.length > 0 ? args[0] : "Cafeteria";
+//
+//		// the "title" arg specifies the default field to use
+//		// when no field is explicitly specified in the query.
+//		Query q = new QueryParser("title", analyzer).parse(querystr);
+//
+//		// 3. search
+//		int hitsPerPage = 10;
+//		IndexReader reader = DirectoryReader.open(index);
+//		IndexSearcher searcher = new IndexSearcher(reader);
+//
+//		ScoreDoc sd = new ScoreDoc(0, 100);
+//		TopScoreDocCollector collector = TopScoreDocCollector.create(
+//				hitsPerPage, sd);
+//		searcher.search(q, collector);
+//		ScoreDoc[] hits = collector.topDocs().scoreDocs;
+//
+//		// 4. display results
+//		System.out.println("Found " + hits.length + " hits.");
+//		for (int i = 0; i < hits.length; ++i) {
+//			int docId = hits[i].doc;
+//			
+//			Document d = searcher.doc(docId);
+//			System.out.println((i + 1) + ". " + d.get("isbn") + "\t"
+//					+ d.get("title") + " -->" + hits[i].score);
+//		}
+//
+//		// reader can only be closed when there
+//		// is no need to access the documents any more.
+//		reader.close();
+//	}
 }
