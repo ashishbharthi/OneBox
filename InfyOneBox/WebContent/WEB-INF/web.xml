@@ -27,6 +27,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>DummyURLServlet</servlet-name>
-    <url-pattern>/dummyurl</url-pattern>
+    <url-pattern>/dummy/*</url-pattern>
   </servlet-mapping>
 </web-app>

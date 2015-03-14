@@ -14,6 +14,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import com.google.gson.Gson;
 import com.onebox.entity.OneInfyObject;
 import com.onebox.entity.ResultsObject;
+import com.onebox.entity.ShowObject;
 import com.onebox.services.LuceneSearchService;
 
 /**
@@ -50,7 +51,13 @@ public class SearchServlet extends HttpServlet {
 		try {
 			List<OneInfyObject> results = lss.getSearchResults(searchText);
 			
-			ResultsObject ro = new ResultsObject(results, "Showing results for " + searchText, false);
+			String msg = "Showing results for " + searchText;
+			if (results.size() == 1) {
+				ShowObject so = (ShowObject)results.get(0);
+				msg = "Opening "+ so.getName() +" application";
+			}
+			
+			ResultsObject ro = new ResultsObject(results, msg, false);
 			
 			Gson g = new Gson();
 			

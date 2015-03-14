@@ -3,6 +3,7 @@ package com.onebox.entity;
 public class ShowObject extends OneInfyObject{
 	private String type;
 	private String url;
+	private String name;
 	public String getType() {
 		return type;
 	}
@@ -16,9 +17,13 @@ public class ShowObject extends OneInfyObject{
 	public ShowObject(String type, String url) {
 		super();
 		this.type = type;
-		this.url = url;
+		this.url = "dummy/?system="+url;
+		this.name = url;
 	}
 	public void setUrl(String url) {
-		this.url = url;
+		this.url = "dummy/?system="+url;
+	}
+	public String getName() {
+		return name;
 	}
 }

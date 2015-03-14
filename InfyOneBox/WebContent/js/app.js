@@ -72,6 +72,7 @@ $(function(){
 var infyOneResp;
 var doSearch = function(event) {
 	$('#searchDiv').removeClass('verticalCenter');
+	$('#resultList').empty();
 	var srchTxt = $('#searchText').val();
 	var voiceMode = $('#voiceMode').val();
 	
