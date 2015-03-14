@@ -6,7 +6,8 @@ public class ResultsObject {
 	private List<OneInfyObject> results;
 	private String say;
 	private Boolean spellCorrect;
-	
+	private String originalSearchText;
+	private String correctedSearchText;
 	
 	
 	public ResultsObject(List<OneInfyObject> results, String say,
@@ -17,6 +18,22 @@ public class ResultsObject {
 		this.spellCorrect = spellCorrect;
 	}
 	
+	public String getOriginalSearchText() {
+		return originalSearchText;
+	}
+
+	public void setOriginalSearchText(String originalSearchText) {
+		this.originalSearchText = originalSearchText;
+	}
+
+	public String getCorrectedSearchText() {
+		return correctedSearchText;
+	}
+
+	public void setCorrectedSearchText(String correctedSearchText) {
+		this.correctedSearchText = correctedSearchText;
+	}
+
 	public List<OneInfyObject> getResults() {
 		return results;
 	}

@@ -16,6 +16,7 @@ import com.onebox.entity.OneInfyObject;
 import com.onebox.entity.ResultsObject;
 import com.onebox.entity.ShowObject;
 import com.onebox.services.LuceneSearchService;
+import com.onebox.services.SpellCheckService;
 
 /**
  * Servlet implementation class SearchServlet
@@ -46,13 +47,25 @@ public class SearchServlet extends HttpServlet {
 		Boolean voice = Boolean.parseBoolean(request.getParameter("voice"));
 		String searchText = request.getParameter("srchTxt");
 		LuceneSearchService lss = LuceneSearchService.getInstance();
+		SpellCheckService scs = SpellCheckService.getInstance();
+		
+		String correctedText = scs.correctSpellings(searchText);
 		
 		System.out.println("isVoice:" + request.getParameter("voice"));
 		List<OneInfyObject> results = null;
 		try {
 			
-			ResultsObject ro = lss.getSearchResults(searchText);
+			ResultsObject ro = lss.getSearchResults(correctedText);
 			
+			ro.setOriginalSearchText(searchText);
+			
+			if(searchText.toLowerCase().trim().equals(correctedText)){
+				ro.setSpellCorrect(false);
+			}
+			else{
+				ro.setCorrectedSearchText(correctedText);
+				ro.setSpellCorrect(true);
+			}
 			Gson g = new Gson();
 			response.setContentType("application/json");
 			Writer w = response.getWriter();

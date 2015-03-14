@@ -97,12 +97,12 @@ public class LuceneSearchService {
 				if(s.equalsIgnoreCase("Apply Leave")){
 					
 					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "From Date", "date", "incomplete", ""));
-					ro = new ResultsObject(result, "Please select from date", false);
+					ro = new ResultsObject(result, "Please select a start date", false);
 					
 				}else if(s.equalsIgnoreCase("Apply Leave from tomorrow")){
 					
 					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "incomplete", ""));
-					ro = new ResultsObject(result, "Please select start date", false);
+					ro = new ResultsObject(result, "Please select the end date", false);
 					
 				}else if(s.toLowerCase().indexOf("apply leave from tomorrow to") >= 0){
 					
@@ -139,6 +139,8 @@ public class LuceneSearchService {
 			if (result.size() == 1) {
 				ShowObject so = (ShowObject)result.get(0);
 				msg = "Opening "+ so.getName() +" application";
+			}else if(result.size() == 0){
+				msg = "Sorry! No results found!";
 			}
 			
 			ro = new ResultsObject(result, msg, false);
