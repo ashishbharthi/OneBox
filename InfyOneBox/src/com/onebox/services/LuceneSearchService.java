@@ -25,7 +25,10 @@ import com.onebox.entity.ShowObject;
 import com.onebox.entity.WorkflowObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,7 +106,12 @@ public class LuceneSearchService {
 					
 				}else if(s.indexOf("Apply Leave from tomorrow to") > 0){
 					
-					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "complete", "Leave Applied"));
+					Calendar c = Calendar.getInstance();
+					c.setTime(new Date()); // Now use today date.
+					c.add(Calendar.DATE, 1); // Adding 5 days
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "complete", s.replaceFirst("tomorrow", sdf.format(c.getTime()))));
 					ro = new ResultsObject(result, "Leave successfully applied. Thank you for using our application.", false);
 				}
 			}
