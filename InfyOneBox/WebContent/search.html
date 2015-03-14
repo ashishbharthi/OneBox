@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/animate.min.css">
+
+
+<meta charset="utf-8">
+<title>Infy One Box</title>
+</head>
+<body>
+  <div style="position:fixed;
+   right:60px;
+   top:5px; float:right; display:none">
+    <img src="https://www.pehub.com/wp-content/uploads/avatars/11839/9213ed45c2d7ad5d6e7f5742e35ec892-bpthumb.jpg" class="img-circle">
+  </div>
+  <div style="position:fixed;
+   right:10px;
+   top:5px; float:right">
+<form align="right" name="form1" method="post" action="">
+  <label class="logoutLblPos">
+    <button class="btn btn-default btn-lg" style="border:0px" id="submit2" data-toggle="modal" data-target="#settingsModal"><i class="fa fa-cog"></i></button>
+  </label>
+</form>
+</div>
+<div class="container verticalCenter">
+  
+    <img class="center-block" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/400px-Infosys_logo.svg.png" width="200" >
+  
+  <br>
+  <div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <form role="search">
+    	<voice-recognition continuous="false" id="recognition-element"></voice-recognition>
+        <div class="input-group add-on">
+          <input id="searchText" type="text" style="border-right:0px" class="form-control input-lg"></input>
+          <div class="input-group-btn">
+            <button id="crossButton" class="btn btn-default btn-lg" style="margin-right:-10px;border-left:0px;display:none"><i class="fa fa-times"></i></button>
+            <button id="speechButton" class="btn btn-default btn-lg" style="border-left:0px" ><i id="speechButtonIcon"  class="fa fa-microphone"></i></button>
+            <button class="btn btn-success btn-lg"><i class="fa fa-search"></i></button>
+          </div>
+          
+        </div>
+      
+      </form>
+  </div>
+  </div>
+</div>
+
+ <!-- Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Settings</h4>
+      </div>
+      <div class="modal-body">
+        This is modal body
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success btn-sm">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/polymer.min.js"></script>
+<link rel="import" href="js/voice-player.html">
+<link rel="import" href="js/voice-recognition.html">
+<script src="js/app.js"></script>
+</body>
+</html>
