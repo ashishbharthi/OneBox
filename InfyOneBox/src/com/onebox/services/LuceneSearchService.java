@@ -89,22 +89,7 @@ public class LuceneSearchService {
 		
 		ResultsObject ro = null;
 		
-		if(isShow(s)){
-			for (int i = 0; i < hits.length; ++i) {
-				int docId = hits[i].doc;
-				Document d = searcher.doc(docId);
-				if(hits[i].score > 0.5f)
-					result.add(new ShowObject("show", d.get("isbn")));
-			}
-			
-			String msg = "Showing results for " + s;
-			if (result.size() == 1) {
-				ShowObject so = (ShowObject)result.get(0);
-				msg = "Opening "+ so.getName() +" application";
-			}
-			
-			ro = new ResultsObject(result, msg, false);
-		}else if(isApply(s)){
+		if(isApply(s)){
 			if(hits.length > 1){
 				if(s.equalsIgnoreCase("Apply Leave")){
 					
@@ -122,6 +107,23 @@ public class LuceneSearchService {
 					ro = new ResultsObject(result, "Leave successfully applied. Thank you for using our application.", false);
 				}
 			}
+		}else{
+			
+			for (int i = 0; i < hits.length; ++i) {
+				int docId = hits[i].doc;
+				Document d = searcher.doc(docId);
+				if(hits[i].score > 0.5f)
+					result.add(new ShowObject("show", d.get("isbn")));
+			}
+			
+			String msg = "Showing results for " + s;
+			if (result.size() == 1) {
+				ShowObject so = (ShowObject)result.get(0);
+				msg = "Opening "+ so.getName() +" application";
+			}
+			
+			ro = new ResultsObject(result, msg, false);
+			
 		}
 		
 		
