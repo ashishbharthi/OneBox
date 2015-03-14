@@ -20,21 +20,21 @@
   </div>
   <div style="position:fixed;
    right:10px;
-   top:5px; float:right">
-<form align="right" name="form1" method="post" action="">
+   top:5px; float:right display:none">
+<!--  <form align="right" name="form1" method="post" action="">-->
   <label class="logoutLblPos">
-    <button class="btn btn-default btn-lg" style="border:0px" id="submit2" data-toggle="modal" data-target="#settingsModal"><i class="fa fa-cog"></i></button>
+    <button class="btn btn-default btn-lg" style="border:0px" id="submit2" ><i class="fa fa-cog"></i></button>
   </label>
-</form>
+<!--  </form>-->
 </div>
-<div class="container verticalCenter">
+<div id="searchDiv" class="container verticalCenter">
   
-    <img class="center-block" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/400px-Infosys_logo.svg.png" width="200" >
+    <img class="center-block" src="images/400px-Infosys_logo.svg.png" width="200" >
   
   <br>
   <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <form role="search">
+    <!--  <form >-->
     	<voice-recognition continuous="false" id="recognition-element"></voice-recognition>
         <div class="input-group add-on">
           <input id="searchText" type="text" style="border-right:0px" class="form-control input-lg"></input>
@@ -46,29 +46,12 @@
           
         </div>
       
-      </form>
+      <!--  </form>-->
   </div>
   </div>
 </div>
 
- <!-- Modal -->
-<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Settings</h4>
-      </div>
-      <div class="modal-body">
-        This is modal body
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success btn-sm">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+ 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/polymer.min.js"></script>

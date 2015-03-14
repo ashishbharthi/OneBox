@@ -45,6 +45,16 @@ $(function(){
 			$('#crossButton').hide();
 		}
 	}
+	
+	$('#searchButton').click(function(e){
+		
+		$('#searchDiv').removeClass('verticalCenter');
+		
+	});
+	
+	function clickSearch(){
+		
+	}
 });
 
 
