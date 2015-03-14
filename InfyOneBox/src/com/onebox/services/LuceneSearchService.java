@@ -115,19 +115,19 @@ public class LuceneSearchService {
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
 		IndexWriter w = new IndexWriter(index, config);
-		addDoc(w, "harmony", "HarmonyURL");
-		addDoc(w, "view passport Details", "Passport URL");
-		addDoc(w, "show me my passport", "Passport URL");
-		addDoc(w, "Global Leave", "Leave System URL");
-		addDoc(w, "GLS", "Leave System URL");
-		addDoc(w, "Global Immigration", "GI system Url");
+		addDoc(w, "harmony", "Harmony");
+		addDoc(w, "view passport Details", "Passport");
+		addDoc(w, "show me my passport", "Passport");
+		addDoc(w, "Global Leave", "Leave System");
+		addDoc(w, "GLS", "Leave System");
+		addDoc(w, "Global Immigration", "Global Immigration System");
 		addDoc(w, "Apply Leave for tomorrow", "ApplyLeaveWorkflow");
 		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
 
 		w.close();
 
 		// 2. query
-		String querystr = args.length > 0 ? args[0] : "global immigration";
+		String querystr = args.length > 0 ? args[0] : "Cafeteria";
 
 		// the "title" arg specifies the default field to use
 		// when no field is explicitly specified in the query.
