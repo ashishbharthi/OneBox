@@ -46,15 +46,21 @@ public class SearchServlet extends HttpServlet {
 		try {
 			List<String> results = lss.getSearchResults(request.getParameter("srchTxt"));
 			response.setContentType("application/json");
-			response.getWriter().println("[");
-			for (Iterator iterator = results.iterator(); iterator.hasNext();) {
+			response.getWriter().print("[");
+			Iterator iterator = results.iterator();
+			while(iterator.hasNext()){
 				String string = (String) iterator.next();
-				response.getWriter().println("{");
-				response.getWriter().println("type:show,");
-				response.getWriter().println("url:\"" + string + "\"");
-				response.getWriter().println("}");
+				response.getWriter().print("{");
+				response.getWriter().print("\"type\":\"show\",");
+				response.getWriter().print("\"url\":\"" + string + "\"");
+				
+				if(iterator.hasNext()){
+					response.getWriter().print("},");
+		        } else {
+		        	response.getWriter().print("}");
+		        }
 			}
-			response.getWriter().println("]");
+			response.getWriter().print("]");
 			response.getWriter().flush();
 			
 		} catch (ParseException e) {
