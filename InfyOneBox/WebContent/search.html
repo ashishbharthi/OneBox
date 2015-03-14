@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
 
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -34,7 +35,7 @@
   <br>
   <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <!--  <form >-->
+    <form onsubmit="doSearch(); return false;">
     	<voice-recognition continuous="false" id="recognition-element"></voice-recognition>
         <div class="input-group add-on">
           <input id="searchText" type="text" style="border-right:0px" class="form-control input-lg"></input>
@@ -46,7 +47,7 @@
           
         </div>
       
-      <!--  </form>-->
+      </form>
   </div>
   </div>
 </div>

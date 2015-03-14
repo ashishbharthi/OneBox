@@ -25,6 +25,7 @@ element.addEventListener('result', function(e) {
 });
 
 $(function(){
+	$('#searchText').focus();
 	
 	$('#searchText').keyup(function(e){
 		showHideCrossButton();
@@ -45,17 +46,50 @@ $(function(){
 			$('#crossButton').hide();
 		}
 	}
-	
-	$('#searchButton').click(function(e){
-		
-		$('#searchDiv').removeClass('verticalCenter');
-		
-	});
-	
-	function clickSearch(){
-		
-	}
 });
+var doSearch = function(event) {
+	$('#searchDiv').removeClass('verticalCenter');
+	var srchTxt = $('#searchText').val();
+	console.log(srchTxt);
+	
+	$.ajax({
+		  method: "POST",
+		  url: "/oneinfysearch",
+		  data: { srchTxt: srchTxt}
+		})
+	.done(function( msg ) {
+		console.log("Done Handler");
+		processData(msg);
+	}).fail(function(err){
+		console.log("Error: "+error.message);
+	});//.always(processData(1));//Delete this always
+	
+	return false;
+};
 
+var processData = function(jsonData){
+	//Remove this hardcoding of jsonData
+	/*jsonData = {
+			type: 'show',
+			url: 'http://google.com'
+	};*/
+	runFunction(jsonData.type, [jsonData]);
+};
 
+function runFunction(name, arguments)
+{
+    var fn = window[name];
+    if(typeof fn !== 'function')
+        return;
+
+    fn.apply(window, arguments);
+}
+
+/* One Infy Handlers */
+
+/* Opens msg.url in new tab */
+function show(msg)
+{
+	window.open(msg.url,'_target');
+}
 
