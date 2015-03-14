@@ -159,7 +159,7 @@ public class LuceneSearchService {
 		String[] arr = {"apply"};
 		
 		for (int i = 0; i < arr.length; i++) {
-			if(str.toLowerCase().indexOf(arr[i]) > 0){
+			if(str.toLowerCase().indexOf(arr[i]) >= 0){
 				return true;
 			}
 		}
