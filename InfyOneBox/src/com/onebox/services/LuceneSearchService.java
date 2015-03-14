@@ -84,7 +84,8 @@ public class LuceneSearchService {
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);
-			result.add(new ShowObject("show", d.get("isbn")));
+			if(hits[i].score > 0.5f)
+				result.add(new ShowObject("show", d.get("isbn")));
 		}
 
 		// reader can only be closed when there
@@ -120,13 +121,13 @@ public class LuceneSearchService {
 		addDoc(w, "Global Leave", "Leave System URL");
 		addDoc(w, "GLS", "Leave System URL");
 		addDoc(w, "Global Immigration", "GI system Url");
-		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
+		addDoc(w, "Apply Leave for tomorrow", "ApplyLeaveWorkflow");
 		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
 
 		w.close();
 
 		// 2. query
-		String querystr = args.length > 0 ? args[0] : "Leave";
+		String querystr = args.length > 0 ? args[0] : "global immigration";
 
 		// the "title" arg specifies the default field to use
 		// when no field is explicitly specified in the query.
@@ -147,9 +148,10 @@ public class LuceneSearchService {
 		System.out.println("Found " + hits.length + " hits.");
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
+			
 			Document d = searcher.doc(docId);
 			System.out.println((i + 1) + ". " + d.get("isbn") + "\t"
-					+ d.get("title"));
+					+ d.get("title") + " -->" + hits[i].score);
 		}
 
 		// reader can only be closed when there
