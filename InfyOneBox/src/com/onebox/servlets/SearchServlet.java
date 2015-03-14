@@ -57,7 +57,7 @@ public class SearchServlet extends HttpServlet {
 			response.setContentType("application/json");
 			Writer w = response.getWriter();
 			w.write(g.toJson(ro));
-			
+			System.out.println(g.toJson(ro));
 			response.getWriter().flush();
 			
 		} catch (ParseException e) {

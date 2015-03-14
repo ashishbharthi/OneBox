@@ -46,7 +46,7 @@ public class LuceneSearchService {
 		IndexWriter w = new IndexWriter(index, config);
 		addDoc(w, "harmony", "Harmony");
 		addDoc(w, "view passport Details", "Passport");
-		addDoc(w, "show me my passport", "Passport");
+		addDoc(w, "passport", "Passport");
 		addDoc(w, "Global Leave", "Leave System");
 		addDoc(w, "GLS", "Leave System");
 		addDoc(w, "Global Immigration", "Global Immigration System");
@@ -88,7 +88,7 @@ public class LuceneSearchService {
 		ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
 		// 4. display results
-		System.out.println("Found " + hits.length + " hits.");
+		//System.out.println("Found " + hits.length + " hits.");
 		
 		ResultsObject ro = null;
 		
