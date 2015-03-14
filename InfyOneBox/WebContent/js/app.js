@@ -108,7 +108,7 @@ talker.addEventListener('end', function(e) {
 		var html ="";
 		var results = infyOneResp.results;
 		for(var i=0; i<results.length; i++){
-			html = html + "<li class=\"list-group-item\"><a href='" + results[i].url + "'>" + results[i].url + "</a></li>";
+			html = html + "<li class=\"list-group-item\"><a href='" + results[i].url + "'>" + results[i].name + "</a></li>";
 		}
 		$('#resultList').append(html);
 	}
@@ -134,19 +134,29 @@ function show(msg)
 /* Asks user for a date for apply leave workflow */
 function apply(msg){
 	if(msg.status === "incomplete"){
+		$("#oneInfyTalkerText").html(msg.nextUserInputName);
 		if(msg.nextUserInputType === "date") {
-			if(msg.nextUserInputName === "To Date"){}
-			$('#datepicker').datepicker({
-				autoclose: true }).show();
+			var operator = " ";
+			var options = {autoClose: true};
+			if(msg.nextUserInputName === "To Date"){
+				operator = " to "
+				options.startDate = new Date();
+			} else if(msg.nextUserInputName === "From Date"){
+				//options.startDate = new Date();
+			}
+			$('#datepicker').datepicker(options).show();
 			$("#datepicker").on("changeDate", function(event) {
 			    $("#my_hidden_input").val(
 			        $("#datepicker").datepicker('getFormattedDate')
 			     );
 			    $("#datepicker").hide();
-			    input.value = input.value + " to " + $("#datepicker").datepicker('getFormattedDate');
+			    ("#oneInfyTalkerText").empty();
+			    input.value = input.value + operator + $("#datepicker").datepicker('getFormattedDate');
 			    $("#searchButton").click();
 			});
 		}
+	} else if (msg.status === "confirm"){
+		
 	} else if (msg.status === "complete") {
 		
 	}
