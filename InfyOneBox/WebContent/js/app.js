@@ -61,7 +61,7 @@ var doSearch = function(event) {
 		console.log("Done Handler");
 		processData(msg);
 	}).fail(function(err){
-		console.log("Error: "+error.message);
+		console.log("Error: ",err);
 	});//.always(processData(1));//Delete this always
 	
 	return false;
@@ -73,7 +73,17 @@ var processData = function(jsonData){
 			type: 'show',
 			url: 'http://google.com'
 	};*/
-	runFunction(jsonData.type, [jsonData]);
+
+	if(jsonData.length === 1) {
+		runFunction(jsonData[0].type, [jsonData[0]]);
+	} else {
+		var html ="";
+		for(var i=0; i<jsonData.length; i++){
+			html = html + "<li class=\"list-group-item\"><a href='" + jsonData[i].url + "'>" + jsonData[i].url + "</a></li>";
+		}
+		$('#resultList').append(html);
+	}
+	
 };
 
 function runFunction(name, arguments)
