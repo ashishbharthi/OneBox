@@ -111,7 +111,7 @@ public class LuceneSearchService {
 					c.add(Calendar.DATE, 1); // Adding 5 days
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					
-					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "confirm", s.replaceFirst("tomorrow", sdf.format(c.getTime())) + "to my manager."));
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "confirm", s.replaceFirst("tomorrow", sdf.format(c.getTime())) + " to my manager."));
 					ro = new ResultsObject(result, "Please confirm.", false);
 					
 				}else if(s.toLowerCase().indexOf("to my manager") >= 0){
