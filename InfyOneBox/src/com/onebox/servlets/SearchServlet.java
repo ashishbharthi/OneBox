@@ -2,8 +2,6 @@ package com.onebox.servlets;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -48,6 +46,7 @@ public class SearchServlet extends HttpServlet {
 		String searchText = request.getParameter("srchTxt");
 		LuceneSearchService lss = LuceneSearchService.getInstance();
 		
+		System.out.println("isVoice:" + request.getParameter("voice"));
 		try {
 			List<OneInfyObject> results = lss.getSearchResults(searchText);
 			
