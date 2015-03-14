@@ -1,6 +1,7 @@
 package com.onebox.servlets;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import com.google.gson.Gson;
+import com.onebox.entity.OneInfyObject;
+import com.onebox.entity.ResultsObject;
 import com.onebox.services.LuceneSearchService;
 
 /**
@@ -40,27 +44,24 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		Boolean voice = Boolean.parseBoolean(request.getParameter("voice"));
+		String searchText = request.getParameter("srchTxt");
 		LuceneSearchService lss = LuceneSearchService.getInstance();
 		
 		try {
-			List<String> results = lss.getSearchResults(request.getParameter("srchTxt"));
+			List<OneInfyObject> results = lss.getSearchResults(searchText);
+			
+			ResultsObject ro = new ResultsObject(results, "Showing results for " + searchText, false);
+			
+			Gson g = new Gson();
+			
+			
 			response.setContentType("application/json");
-			response.getWriter().print("[");
-			Iterator iterator = results.iterator();
-			while(iterator.hasNext()){
-				String string = (String) iterator.next();
-				response.getWriter().print("{");
-				response.getWriter().print("\"type\":\"show\",");
-				response.getWriter().print("\"url\":\"" + string + "\"");
-				
-				if(iterator.hasNext()){
-					response.getWriter().print("},");
-		        } else {
-		        	response.getWriter().print("}");
-		        }
-			}
-			response.getWriter().print("]");
+			
+			Writer w = response.getWriter();
+			
+			w.write(g.toJson(ro));
+			
 			response.getWriter().flush();
 			
 		} catch (ParseException e) {
@@ -68,5 +69,38 @@ public class SearchServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	private boolean isShow(String str){
+		String[] arr = {"show", "view", "open"};
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	private boolean isApply(String str){
+		String[] arr = {"apply"};
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	private boolean isApprove(String str){
+		String[] arr = {"approve"};
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(str.toLowerCase().indexOf(arr[i]) > 0){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

@@ -19,4 +19,14 @@
     <servlet-name>SearchServlet</servlet-name>
     <url-pattern>/oneinfysearch</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DummyURLServlet</display-name>
+    <servlet-name>DummyURLServlet</servlet-name>
+    <servlet-class>com.onebox.servlets.DummyURLServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DummyURLServlet</servlet-name>
+    <url-pattern>/dummyurl</url-pattern>
+  </servlet-mapping>
 </web-app>

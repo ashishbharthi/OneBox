@@ -19,8 +19,12 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
+import com.onebox.entity.OneInfyObject;
+import com.onebox.entity.ShowObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LuceneSearchService {
@@ -57,9 +61,11 @@ public class LuceneSearchService {
 		}
 	}
 	
-	public static List<String> getSearchResults(String s) throws ParseException, IOException{
+	
+	
+	public static List<OneInfyObject> getSearchResults(String s) throws ParseException, IOException{
 		
-		List<String> result = new ArrayList<String>();
+		List<OneInfyObject> result = new ArrayList<OneInfyObject>();
 		Query q = new QueryParser("title", analyzer).parse(s);
 
 		// 3. search
@@ -78,7 +84,7 @@ public class LuceneSearchService {
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);
-			result.add(d.get("isbn"));
+			result.add(new ShowObject("show", d.get("isbn")));
 		}
 
 		// reader can only be closed when there
