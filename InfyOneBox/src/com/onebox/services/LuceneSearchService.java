@@ -39,14 +39,17 @@ public class LuceneSearchService {
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
 		IndexWriter w = new IndexWriter(index, config);
-		addDoc(w, "harmony", "HarmonyURL");
-		addDoc(w, "view passport Details", "PassportURL");
-		addDoc(w, "show me my passport", "PassportURL");
-		addDoc(w, "Global Leave", "LeaveSystemURL");
-		addDoc(w, "GLS", "Leave SystemURL");
-		addDoc(w, "Global Immigration", "GISystemUrl");
+		addDoc(w, "harmony", "Harmony");
+		addDoc(w, "view passport Details", "Passport");
+		addDoc(w, "show me my passport", "Passport");
+		addDoc(w, "Global Leave", "Leave System");
+		addDoc(w, "GLS", "Leave System");
+		addDoc(w, "Global Immigration", "Global Immigration System");
+		addDoc(w, "Apply Leave from tomorrow", "ApplyLeaveWorkflow");
 		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
-		addDoc(w, "Lunch Menu Cafeteria", "CafeteriaMenu");
+		addDoc(w, "Apply Leave from tomorrow for 1 day", "ApplyLeaveWorkflow");
+		
+		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
 
 		w.close();
 	}
@@ -121,7 +124,10 @@ public class LuceneSearchService {
 		addDoc(w, "Global Leave", "Leave System");
 		addDoc(w, "GLS", "Leave System");
 		addDoc(w, "Global Immigration", "Global Immigration System");
-		addDoc(w, "Apply Leave for tomorrow", "ApplyLeaveWorkflow");
+		addDoc(w, "Apply Leave from tomorrow", "ApplyLeaveWorkflow");
+		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
+		addDoc(w, "Apply Leave from tomorrow for 1 day", "ApplyLeaveWorkflow");
+		
 		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
 
 		w.close();
