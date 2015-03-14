@@ -36,13 +36,13 @@ public class LuceneSearchService {
 
 		IndexWriter w = new IndexWriter(index, config);
 		addDoc(w, "harmony", "HarmonyURL");
-		addDoc(w, "view passport Details", "Passport URL");
-		addDoc(w, "show me my passport", "Passport URL");
-		addDoc(w, "Global Leave", "Leave System URL");
-		addDoc(w, "GLS", "Leave System URL");
-		addDoc(w, "Global Immigration", "GI system Url");
+		addDoc(w, "view passport Details", "PassportURL");
+		addDoc(w, "show me my passport", "PassportURL");
+		addDoc(w, "Global Leave", "LeaveSystemURL");
+		addDoc(w, "GLS", "Leave SystemURL");
+		addDoc(w, "Global Immigration", "GISystemUrl");
 		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
-		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
+		addDoc(w, "Lunch Menu Cafeteria", "CafeteriaMenu");
 
 		w.close();
 	}
@@ -86,6 +86,17 @@ public class LuceneSearchService {
 		reader.close();
 		return result;
 	}
+	
+	private static void addDoc(IndexWriter w, String title, String isbn)
+			throws IOException {
+		Document doc = new Document();
+		doc.add(new TextField("title", title, Field.Store.YES));
+
+		// use a string field for isbn because we don't want it tokenized
+		doc.add(new StringField("isbn", isbn, Field.Store.YES));
+		w.addDocument(doc);
+	}
+	
 	public static void main(String[] args) throws IOException, ParseException {
 		// 0. Specify the analyzer for tokenizing text.
 		// The same analyzer should be used for indexing and searching
@@ -138,15 +149,5 @@ public class LuceneSearchService {
 		// reader can only be closed when there
 		// is no need to access the documents any more.
 		reader.close();
-	}
-
-	private static void addDoc(IndexWriter w, String title, String isbn)
-			throws IOException {
-		Document doc = new Document();
-		doc.add(new TextField("title", title, Field.Store.YES));
-
-		// use a string field for isbn because we don't want it tokenized
-		doc.add(new StringField("isbn", isbn, Field.Store.YES));
-		w.addDocument(doc);
 	}
 }
