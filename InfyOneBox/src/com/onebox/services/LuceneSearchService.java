@@ -47,9 +47,9 @@ public class LuceneSearchService {
 		addDoc(w, "Global Leave", "Leave System");
 		addDoc(w, "GLS", "Leave System");
 		addDoc(w, "Global Immigration", "Global Immigration System");
-		addDoc(w, "Apply Leave from tomorrow", "ApplyLeaveWorkflow");
-		addDoc(w, "Apply Leave", "ApplyLeaveWorkflow");
-		addDoc(w, "Apply Leave from tomorrow for 1 day", "ApplyLeaveWorkflow");
+		addDoc(w, "Apply Leave from tomorrow", "W100");
+		addDoc(w, "Apply Leave", "W100");
+		addDoc(w, "Apply Leave from tomorrow for 1 day", "W100");
 		
 		addDoc(w, "Lunch Menu Cafeteria", "Cafeteria Menu");
 
@@ -112,7 +112,7 @@ public class LuceneSearchService {
 			for (int i = 0; i < hits.length; ++i) {
 				int docId = hits[i].doc;
 				Document d = searcher.doc(docId);
-				if(hits[i].score > 0.5f)
+				if(hits[i].score > 0.5f && !d.get("isbn").equals("W100"))
 					result.add(new ShowObject("show", d.get("isbn")));
 			}
 			
