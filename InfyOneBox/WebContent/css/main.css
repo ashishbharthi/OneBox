@@ -28,3 +28,22 @@ body{
 	font-family: sans-serif;
 	font-size: xx-large;
  }
+ 
+.confirmBox {
+ 	display: none;
+ 	margin-right: auto;
+	margin-left: auto;
+	cursor: pointer;
+}
+.confirmBox.show {
+	display: block;
+}
+.confirmBox {
+    width: 100px;
+    height: 100px;
+}
+
+.confirmBox > svg {
+    width: 100%;
+    display: block;
+}

@@ -73,6 +73,11 @@ public class LuceneSearchService {
 	
 	public static ResultsObject getSearchResults(String s) throws ParseException, IOException{
 		
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 1); // Adding 1 days
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		List<OneInfyObject> result = new ArrayList<OneInfyObject>();
 		Query q = new QueryParser("title", analyzer).parse(s);
 
@@ -106,23 +111,13 @@ public class LuceneSearchService {
 					
 				}else if(s.toLowerCase().indexOf("apply leave from tomorrow to") >= 0){
 					
-					Calendar c = Calendar.getInstance();
-					c.setTime(new Date()); // Now use today date.
-					c.add(Calendar.DATE, 1); // Adding 5 days
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					
 					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "confirm", s.replaceFirst("tomorrow", sdf.format(c.getTime())) + " to my manager."));
 					ro = new ResultsObject(result, "Please confirm.", false);
 					
 				}else if(s.toLowerCase().indexOf("to my manager") >= 0){
 					
-					Calendar c = Calendar.getInstance();
-					c.setTime(new Date()); // Now use today date.
-					c.add(Calendar.DATE, 1); // Adding 5 days
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					
-					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "confirm", s.replaceFirst("tomorrow", sdf.format(c.getTime()))));
-					ro = new ResultsObject(result, "Leave successfully applied. Thank you for using our application.", false);
+					result.add(new WorkflowObject(searcher.doc(hits[0].doc).get("isbn"), "apply", "To Date", "date", "complete", s.replaceFirst("tomorrow", sdf.format(c.getTime()))));
+					ro = new ResultsObject(result, "Leave successfully applied. Thank you.", false);
 					
 				}
 			}

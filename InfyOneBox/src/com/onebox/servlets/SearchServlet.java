@@ -49,9 +49,10 @@ public class SearchServlet extends HttpServlet {
 		LuceneSearchService lss = LuceneSearchService.getInstance();
 		SpellCheckService scs = SpellCheckService.getInstance();
 		
-		String correctedText = scs.correctSpellings(searchText);
+		String correctedText = searchText;//scs.correctSpellings(searchText);
 		
-		System.out.println("isVoice:" + request.getParameter("voice"));
+		System.out.println("OriginalText : "+ searchText);
+		System.out.println("CorrectedText: "+ correctedText);
 		List<OneInfyObject> results = null;
 		try {
 			

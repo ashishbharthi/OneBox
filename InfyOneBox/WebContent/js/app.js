@@ -137,29 +137,63 @@ function apply(msg){
 		$("#oneInfyTalkerText").html(msg.nextUserInputName);
 		if(msg.nextUserInputType === "date") {
 			var operator = " ";
-			var options = {autoClose: true};
+			var options = {
+					autoClose: true, 
+					toggleActive: true
+				};
 			if(msg.nextUserInputName === "To Date"){
 				operator = " to "
 				options.startDate = new Date();
 			} else if(msg.nextUserInputName === "From Date"){
 				//options.startDate = new Date();
 			}
-			$('#datepicker').datepicker(options).show();
+			$('#datepicker').datepicker(options);
+			$('#datepicker').show();
 			$("#datepicker").on("changeDate", function(event) {
 			    $("#my_hidden_input").val(
 			        $("#datepicker").datepicker('getFormattedDate')
 			     );
-			    $("#datepicker").hide();
+			    
 			    $("#oneInfyTalkerText").empty();
 			    input.value = input.value + operator + $("#datepicker").datepicker('getFormattedDate');
+			    
+			    $("#datepicker").hide();
 			    $("#searchButton").click();
 			});
 		}
 	} else if (msg.status === "confirm"){
+		$("#confirmBoxContainer").addClass("show");
+		$("#oneInfyTalkerText").html(msg.statusMessage);
 		
-	} else if (msg.status === "complete") {
-		
-	}
-	
-}
+		cancelCircle = new ProgressBar.Circle('#confirmBoxContainer', {
+		    color: '#FCB03C',
+		    strokeWidth: 2.1,
+		    trailWidth: 1,
+		    duration: 3000,
+		    fill: "rgba(0, 114, 206, 0.5)",
+		    text: {
+		        value: 'Cancel'
+		    },
+		    step: function(state, bar) {
+		        //bar.setText((bar.value() * 100).toFixed(0));
+		    }
+		});
 
+		cancelCircle.animate(1, function(){
+			cancelCircle.destroy();
+			$("#oneInfyTalkerText").empty();
+			$("#confirmBoxContainer").removeClass("show");
+			input.value = msg.statusMessage;
+			$("#searchButton").click();
+		});
+	} else if (msg.status === "complete") {
+		input.value = "";
+	}
+}
+$("#confirmBoxContainer").click(function(){
+	cancelCircle.stop();
+	cancelCircle.destroy();
+	$("#oneInfyTalkerText").empty();
+	$("#confirmBoxContainer").removeClass("show");
+	input.value = "";
+});
