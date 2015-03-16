@@ -22,14 +22,14 @@ public class SpellCheckService {
 	private static SpellCheckService scs = null;
 	
 	private SpellCheckService() throws MalformedURLException, IOException{
-		BufferedReader reader = null;
-		InputStream in = getClass().getClassLoader().getResourceAsStream("dictionary.txt"); 
-        reader = new BufferedReader(new InputStreamReader(in));
-        
-        String line = null;
-        while ( (line = reader.readLine()) != null) {
-            sc.trainSingle(line);
-        }
+//		BufferedReader reader = null;
+//		InputStream in = getClass().getClassLoader().getResourceAsStream("dictionary.txt"); 
+//        reader = new BufferedReader(new InputStreamReader(in));
+//        
+//        String line = null;
+//        while ( (line = reader.readLine()) != null) {
+//            sc.trainSingle(line);
+//        }
 		//sc.trainFile("dictionary.txt");
 		sc.trainSingle("Performagic");
 		sc.trainSingle("iTravel");

@@ -49,7 +49,7 @@ public class SearchServlet extends HttpServlet {
 		LuceneSearchService lss = LuceneSearchService.getInstance();
 		SpellCheckService scs = SpellCheckService.getInstance();
 		
-		String correctedText = searchText;//scs.correctSpellings(searchText);
+		String correctedText = scs.correctSpellings(searchText);
 		
 		System.out.println("OriginalText : "+ searchText);
 		System.out.println("CorrectedText: "+ correctedText);
